@@ -37,6 +37,22 @@ const loadVideos = () => {
 const displayVideos = (videos) => {
     const videoContainer = document.getElementById('videos');
     videoContainer.innerHTML ="";
+    if(videos.length == 0){
+        videoContainer.classList.remove("grid");
+        videoContainer.innerHTML = `
+        <div class="min-h-[300px] flex flex-col justify-center items-center gap-5">
+        <img src="assests/Icon.png" />
+        </div>
+        <h2 class="text-center font-bold text-xl">
+        Opps!!Sorry,there is no content here 
+        </h2>
+        `;
+        return;
+    }
+    else{
+        videoContainer.classList.add("grid");
+    }
+
     videos.forEach(video => {
         console.log(video);
         // Creating the card
@@ -80,8 +96,6 @@ const displayVideos = (videos) => {
         videoContainer.append(card);
     });
 }
-
-
 
 
 //create displaycatagories
