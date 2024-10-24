@@ -20,12 +20,28 @@ fetch('https://openapi.programming-hero.com/api/phero-tube/categories')
 
 const loadCategoryVideos =(id) =>{
 // alert(id);
-
 fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
 .then(res => res.json())
-.then(data => displayVideos(data.category))
+.then(data => 
+{
+    //remove active class
+    removeActiveClass();
+    //active the btncls that will be clicked
+    const activeBtn = document.getElementById(`btn-${id}`)
+    activeBtn.classList.add("active");
+    displayVideos(data.category)
+})
 .catch(error => console.log(error));
 };
+
+//remove active class
+const removeActiveClass = () =>{
+    const buttons = document.getElementsByClassName("category-btn");
+    console.log(buttons);
+    for(let btn of buttons){
+        btn.classList.remove("active");
+    }
+}
 // load video cards
 const loadVideos = () => {
     fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
@@ -43,7 +59,7 @@ const displayVideos = (videos) => {
         <div class="min-h-[300px] flex flex-col justify-center items-center gap-5">
         <img src="assests/Icon.png" />
         </div>
-        <h2 class="text-center font-bold text-xl">
+        <h2 class="text-center font-bold text-2xl">
         Opps!!Sorry,there is no content here 
         </h2>
         `;
@@ -109,7 +125,7 @@ const displayCategories = (data) =>{
         // button.innerText = element.category;
         buttonContainer.innerHTML = 
         `
-        <button onclick="loadCategoryVideos(${element.category_id})" class="btn">
+        <button id="btn-${element.category_id}" onclick="loadCategoryVideos(${element.category_id})" class="btn category-btn">
         ${element.category}
         </button>
         `;
